@@ -22,7 +22,7 @@ function Cuisine() {
     const fetchMeals = async () => {
       if (!cuisine) return;
       try {
-        const response = await axios.get("http://localhost:3000/api/meals", {
+        const response = await axios.get("/api/meals", {
           params: { cuisine },
         });
         console.log("Fetched Meals:", response.data.meals);
@@ -38,7 +38,7 @@ function Cuisine() {
 
   const fetchRecipe = async (id) => {
     try {
-      const response = await axios.post("http://localhost:3000/api/recipe", {
+      const response = await axios.post("/api/recipe", {
         id,
       });
 

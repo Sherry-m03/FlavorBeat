@@ -76,6 +76,7 @@ app.get("/api/tracks", async (req, res) => {
               },
             }
           );
+          console.log(spotifyResponse);
 
           const spotifyTrack = spotifyResponse.data.tracks.items[0] || null;
           return {

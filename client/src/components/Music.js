@@ -17,7 +17,7 @@ function Music() {
   useEffect(() => {
     const fetchTracks = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/tracks", {
+        const response = await axios.get("/api/tracks", {
           params: { mood },
         });
         setTracks(response.data);
