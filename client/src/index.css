@@ -94,7 +94,7 @@ input:focus {
   height: 25vh;
   margin: 0.5%;
   border-radius: 10px;
-  background-color: wheat;
+  background-color: transparent;
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -347,7 +347,7 @@ input:focus {
   height: 30vh;
   margin: 1%;
   border-radius: 10px;
-  background-color: wheat;
+  background-color: transparent;
   display: block;
   transition: transform 0.3s ease;
 }

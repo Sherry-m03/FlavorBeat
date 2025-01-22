@@ -154,7 +154,7 @@ function Home() {
         {
           name: "Turkish",
           image:
-            "https://cdn.pixabay.com/photo/2017/06/04/15/33/kebab-2373172_640.jpg",
+            "https://cdn.pixabay.com/photo/2020/05/11/15/06/food-5158702_1280.jpg",
         },
       ],
     },
@@ -200,7 +200,7 @@ function Home() {
         {
           name: "Turkish",
           image:
-            "https://cdn.pixabay.com/photo/2017/06/04/15/33/kebab-2373172_640.jpg",
+            "https://cdn.pixabay.com/photo/2020/05/11/15/06/food-5158702_1280.jpg",
         },
         {
           name: "Chinese",

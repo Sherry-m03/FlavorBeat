@@ -17,11 +17,38 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "build")));
 app.use(express.json());
 
+let spotifyAccessToken = null;
+let tokenExpirationTime = null;
+
+const getSpotifyAccessToken = async () => {
+  const spotifyClientId = process.env.SPOTIFY_CLIENT_ID;
+  const spotifyClientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+
+  if (spotifyAccessToken && Date.now() < tokenExpirationTime) {
+    return spotifyAccessToken;
+  }
+
+  const response = await axios.post(
+    "https://accounts.spotify.com/api/token",
+    "grant_type=client_credentials",
+    {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Basic ${Buffer.from(
+          `${spotifyClientId}:${spotifyClientSecret}`
+        ).toString("base64")}`,
+      },
+    }
+  );
+
+  spotifyAccessToken = response.data.access_token;
+  tokenExpirationTime = Date.now() + response.data.expires_in * 1000;
+  return spotifyAccessToken;
+};
+
 app.get("/api/tracks", async (req, res) => {
   const mood = req.query.mood;
   const lastFmApiKey = process.env.LASTFM_API_KEY;
-  const spotifyClientId = process.env.SPOTIFY_CLIENT_ID;
-  const spotifyClientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 
   try {
     const lastFmResponse = await axios.get(
@@ -45,20 +72,7 @@ app.get("/api/tracks", async (req, res) => {
       .sort(() => Math.random() - 0.5)
       .slice(0, 7);
 
-    const spotifyTokenResponse = await axios.post(
-      "https://accounts.spotify.com/api/token",
-      "grant_type=client_credentials",
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Authorization: `Basic ${Buffer.from(
-            `${spotifyClientId}:${spotifyClientSecret}`
-          ).toString("base64")}`,
-        },
-      }
-    );
-
-    const spotifyAccessToken = spotifyTokenResponse.data.access_token;
+    const spotifyAccessToken = await getSpotifyAccessToken();
 
     const enrichedTracks = await Promise.all(
       shuffledTracks.map(async (track) => {
