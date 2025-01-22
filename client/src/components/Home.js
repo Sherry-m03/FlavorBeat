@@ -313,7 +313,6 @@ function Home() {
   ];
 
   function getCuisineForMood(mood) {
-    console.log("inside getcuisine");
     const matchedEmotion = MoodCuisines.find((entry) =>
       entry.emotion.toLowerCase().includes(mood.toLowerCase())
     );
@@ -363,14 +362,19 @@ function Home() {
     fetchTracks(userMood);
   };
 
-  const fetchTracks = async (mood) => {
-    const cuisines = getCuisineForMood(mood);
-    console.log(cuisines);
-    navigate("/search-music", { state: { mood, cuisines } });
-  };
-
   const handleChange = (e) => {
     setUserMood(e.target.value);
+  };
+
+  const handleEnterPress = (event) => {
+    if (event.key === "Enter") {
+      fetchTracks(userMood);
+    }
+  };
+
+  const fetchTracks = async (mood) => {
+    const cuisines = getCuisineForMood(mood);
+    navigate("/search-music", { state: { mood, cuisines } });
   };
 
   useEffect(() => {
@@ -395,6 +399,7 @@ function Home() {
           <input
             placeholder="How are you feeling today?"
             onChange={handleChange}
+            onKeyDown={handleEnterPress}
           ></input>
         </div>
         <button className="time-recom" onClick={getEmotionBasedOnTime}>

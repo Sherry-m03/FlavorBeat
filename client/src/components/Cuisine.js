@@ -54,9 +54,6 @@ function Cuisine() {
     }
   };
 
-  console.log("Cuisine:", cuisine);
-  console.log("Meas:", meals);
-
   const userSearch = async () => {
     navigate("/");
   };

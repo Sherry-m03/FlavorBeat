@@ -12,7 +12,6 @@ function Music() {
 
   const location = useLocation();
   const { tempMood, cuisines } = location.state || {};
-  console.log(cuisines);
 
   useEffect(() => {
     const fetchTracks = async () => {
@@ -31,12 +30,10 @@ function Music() {
   }, [mood]);
 
   const fetchFood = async (cuisineName) => {
-    console.log("Navigating with: " + cuisineName);
     navigate("/cuisine-dishes", {
       state: { cuisine: cuisineName },
     });
   };
-  console.log(tracks);
 
   const userSearch = async () => {
     navigate("/");
